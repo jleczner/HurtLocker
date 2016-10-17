@@ -23,6 +23,7 @@ public class JerkSONParser {
     public String formatItem(String item) {
         Pattern separators = Pattern.compile(JerkSONParser.separators);
         String[] elements = separators.split(item);
+        return null;
     }
 
     public String formatGroceryItem(String item) {

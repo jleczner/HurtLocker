@@ -26,7 +26,7 @@ public abstract class JerkSONParser {
         return null;
     }
 
-    public boolean checkValidForm(JerkSONParsable item) {
+    public boolean checkValidForm(String item) {
         return false;
     }
 

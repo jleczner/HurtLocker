@@ -46,15 +46,13 @@ public class GroceryParserTest {
     @Test
     public void checkValidFormPassTest() {
         String proper = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
-        Grocery milk = groceryList.newItem(proper);
-        assertTrue(groceryList.checkValidForm(milk));
+        assertTrue(groceryList.checkValidForm(proper));
     }
 
     @Test
     public void checkValidFormFailTest() {
         String improper = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
-        Grocery milk = groceryList.newItem(improper);
-        assertFalse(groceryList.checkValidForm(milk));
+        assertFalse(groceryList.checkValidForm(improper));
     }
 
     @Test

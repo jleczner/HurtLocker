@@ -1,5 +1,6 @@
 package leczner.jon.HurtLocker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  */
 public class Grocery implements JerkSONParsable {
     private String name;
-    private List<String> prices;
+    private static List<String> prices = new ArrayList<>();
 
     public Grocery(String name, String price) {
         this.name = name;

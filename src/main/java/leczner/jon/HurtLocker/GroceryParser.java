@@ -20,6 +20,18 @@ public class GroceryParser extends JerkSONParser {
         groceryInfo = new HashMap<>();
     }
 
+    public List<Grocery> getGroceryList() {
+        return groceryList;
+    }
+
+    public Map<String, Integer> getNames() {
+        return names;
+    }
+
+    public Map<String, Map<String, Integer>> getGroceryInfo() {
+        return groceryInfo;
+    }
+
     @Override
     public void processInput() {
         return;

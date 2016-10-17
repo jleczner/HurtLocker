@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 public abstract class JerkSONParser {
     private String source;
     private static final String separators = "[!;@^*%]";
-    private String[] items;
     private static int errorCount = 0;
 
     public JerkSONParser(String source) {
@@ -20,8 +19,8 @@ public abstract class JerkSONParser {
     public abstract String formatOutput();
     public abstract void displayOutput();
 
-    public String[] parseItems() { // Pattern.CASE_INSENSITIVE
-        items = source.split("##");
+    public String[] parseItems() {
+        String[] items = source.split("##");
         return items;
     }
 

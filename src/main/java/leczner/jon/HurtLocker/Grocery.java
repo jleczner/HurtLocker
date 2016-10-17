@@ -23,4 +23,6 @@ public class Grocery implements JerkSONParsable {
     public List<String> getValue() {
         return prices;
     }
+
+    // TODO add support for other fields
 }

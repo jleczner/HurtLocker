@@ -27,35 +27,34 @@ public class GroceryParserTest {
     }
 
     @Test
-    public void parseItemsTest() {
-        assertEquals(groceryCount, tokens.length);
+    public void newItemTest() {
+        Grocery milk = groceryList.newItem("milk", "5.00");
+        assertFalse(groceryList.g);
     }
 
     @Test
-    public void parseTokensTest() {
-        String input = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
-        String[] expected = {"naMe:Milk", "price:3.23", "type:Food", "expiration:1/25/2016"};
-        String[] actual = groceryList.parseTokens(input);
-        assertArrayEquals(expected, actual);
+    public void nameCheckTest() {
+        groceryList.
     }
 
     @Test
-    public void parseTokensErrorTest() {
-        String input = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
-        groceryList.parseTokens(input);
-        assertEquals(1, groceryList.getErrorCount());
+    public void priceCheckTest() {
+
     }
 
     @Test
-    public void checkValidFormPassTest() {
-        String proper = "naMe:Milk;";
-        assertTrue(groceryList.checkValidForm(proper));
+    public void getNameOccurrencesTest() {
+
     }
 
     @Test
-    public void checkValidFormFailTest() {
-        String improper = "naMe:;";
-        assertFalse(groceryList.checkValidForm(improper));
+    public void getPriceOccurrencesTest() {
+
+    }
+
+    @Test
+    public void processInputTest() {
+
     }
 
     @Test
@@ -70,13 +69,7 @@ public class GroceryParserTest {
     }
 
     @Test
-    public void getErrorCount() {
-//        groceryList.prepData();
-        assertEquals(errorCount, groceryList.getErrorCount());
-    }
-
-    @Test
-    public void finalTest() {
+    public void formatOutputTest() {
         String expected = "name:    Milk \t\t seen: 6 times\n" +
                 "============= \t \t =============\n" +
                 "Price: \t 3.23\t\t seen: 5 times\n" +

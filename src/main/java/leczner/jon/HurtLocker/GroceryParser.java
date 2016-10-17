@@ -23,11 +23,9 @@ public class GroceryParser extends JerkSONParser {
     public List<Grocery> getGroceryList() {
         return groceryList;
     }
-
     public Map<String, Integer> getNames() {
         return names;
     }
-
     public Map<String, Map<String, Integer>> getGroceryInfo() {
         return groceryInfo;
     }
@@ -56,7 +54,7 @@ public class GroceryParser extends JerkSONParser {
         return item;
     }
 
-    public void nameCheck(String name) {
+    private void nameCheck(String name) {
         if (names.containsKey(name)) {
             int counter = names.get(name);
             names.put(name, ++counter);
@@ -64,7 +62,7 @@ public class GroceryParser extends JerkSONParser {
             names.put(name, 1);
         }
     }
-    public void priceCheck(String name, String price) { // TODO refactor for size later
+    private void priceCheck(String name, String price) { // TODO refactor for size later
         Map<String, Integer> priceMap;
 
         if (groceryInfo.containsKey(name)) {

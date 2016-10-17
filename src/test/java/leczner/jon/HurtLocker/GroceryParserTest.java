@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class GroceryParserTest {
     private GroceryParser groceryList;
-    private String[] tokens;
+    private String[] items;
     private int errorCount = 4;
     private int groceryCount = 28;
 
@@ -22,39 +22,41 @@ public class GroceryParserTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tokens = groceryList.parseItems();
+        items = groceryList.parseItems();
         groceryList.resetErrorCount();
     }
 
     @Test
     public void newItemTest() {
-        Grocery milk = groceryList.newItem("milk", "5.00");
-        assertFalse(groceryList.g);
-    }
-
-    @Test
-    public void nameCheckTest() {
-        groceryList.
-    }
-
-    @Test
-    public void priceCheckTest() {
-
+        groceryList.newItem("milk", "5.00");
+        assertFalse(groceryList.getGroceryList().isEmpty());
     }
 
     @Test
     public void getNameOccurrencesTest() {
-
+        groceryList.newItem("milk", "5.00");
+        groceryList.newItem("milk", "4.50");
+        groceryList.newItem("milk", "4.50");
+        groceryList.newItem("bread", "4.50");
+        groceryList.newItem("bread", "5.00");
+        assertEquals(3, groceryList.getNameOccurrences("milk"));
     }
 
     @Test
     public void getPriceOccurrencesTest() {
-
+        groceryList.newItem("milk", "5.00");
+        groceryList.newItem("milk", "4.50");
+        groceryList.newItem("milk", "4.50");
+        groceryList.newItem("bread", "4.50");
+        groceryList.newItem("bread", "5.00");
+        assertEquals(1, groceryList.getPriceOccurrences("bread", "4.50"));
     }
 
     @Test
     public void processInputTest() {
-
+        groceryList = new GroceryParser("naMe:Milk;price:3.23;type:Food;expiration:1/25/2016##naMe:;price:3.23;type:Food@expiration:1/25/2016##");
+        groceryList.processInput();
+        assertEquals(1, groceryList.getGroceryList().size());
     }
 
     @Test

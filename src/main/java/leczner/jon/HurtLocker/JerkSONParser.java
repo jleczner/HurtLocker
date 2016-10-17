@@ -1,5 +1,6 @@
 package leczner.jon.HurtLocker;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -7,8 +8,8 @@ import java.util.regex.Pattern;
  */
 public abstract class JerkSONParser {
     private String source;
-    private static final String separators = "[!;:@^*%]";
-    private String[] tokens;
+    private static final String separators = "[!;@^*%]";
+    private String[] items;
     private static int errorCount = 0;
 
     public JerkSONParser(String source) {
@@ -16,18 +17,25 @@ public abstract class JerkSONParser {
     }
 
     public String[] parseItems() { // Pattern.CASE_INSENSITIVE
-        tokens = source.split("##");
+        items = source.split("##");
+        return items;
+    }
+
+    public String[] parseTokens(String item) {
+        Pattern separators = Pattern.compile(JerkSONParser.separators);
+        String[] tokens = separators.split(item);
+        for (String token : tokens) {
+            if (!checkValidForm(token)) {
+                errorCount++;
+            }
+        }
         return tokens;
     }
 
-    public String parseTokens(String item) {
-        Pattern separators = Pattern.compile(JerkSONParser.separators);
-        String[] elements = separators.split(item);
-        return null;
-    }
-
-    public boolean checkValidForm(String item) {
-        return false;
+    public boolean checkValidForm(String token) {
+        Pattern hasValue = Pattern.compile("[A-Za-z]+:\\w+");
+        Matcher pattern = hasValue.matcher(token);
+        return (pattern.matches());
     }
 
     public int getErrorCount() {
@@ -77,5 +85,11 @@ public abstract class JerkSONParser {
 
         // the distance is the cost for transforming all letters in both strings
         return cost[len0 - 1];
+    }
+
+
+    // for testing
+    public void resetErrorCount() {
+        errorCount = 0;
     }
 }

@@ -13,13 +13,26 @@ public class GroceryParser extends JerkSONParser {
     private Map<String, Integer> names;
     private Map<String, Map<String, Integer>> groceryInfo; // key=name, value=[key=price, value=numOccurrences]
 
-    // TODO figure out how to differentiate prices, i.e. milk - prices[0] = 1.00, bread - prices[1] = 1.00; pricesMap["1.00", 2]
-
     public GroceryParser(String source) {
         super(source);
         groceryList = new ArrayList<>();
         names = new HashMap<>();
         groceryInfo = new HashMap<>();
+    }
+
+    @Override
+    public void processInput() {
+        return;
+    }
+
+    @Override
+    public String formatOutput() {
+        return null;
+    }
+
+    @Override
+    public void displayOutput() {
+        return;
     }
 
     public Grocery newItem(String name, String price) {
@@ -57,11 +70,6 @@ public class GroceryParser extends JerkSONParser {
         }
     }
 
-    public String formatGroceryItem(String name) {
-
-        return null;
-    }
-
     public int getNameOccurrences(String name) {
         return names.get(name);
     }
@@ -70,13 +78,8 @@ public class GroceryParser extends JerkSONParser {
         return groceryInfo.get(name).get(price);
     }
 
-    @Override
-    public String formatOutput() {
+    public String formatGroceryItem(String name) {
+
         return null;
-    }
-
-    @Override
-    public void displayOutput() {
-
     }
 }

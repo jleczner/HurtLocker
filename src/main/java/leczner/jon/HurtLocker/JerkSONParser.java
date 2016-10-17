@@ -16,6 +16,10 @@ public abstract class JerkSONParser {
         this.source = source;
     }
 
+    public abstract void processInput();
+    public abstract String formatOutput();
+    public abstract void displayOutput();
+
     public String[] parseItems() { // Pattern.CASE_INSENSITIVE
         items = source.split("##");
         return items;
@@ -41,11 +45,6 @@ public abstract class JerkSONParser {
     public int getErrorCount() {
         return errorCount;
     }
-
-    public abstract String formatOutput();
-
-    public abstract void displayOutput();
-
 
     // for testing
     public void resetErrorCount() {

@@ -5,7 +5,7 @@ package leczner.jon.HurtLocker;
  */
 public class JerkSONParser {
     private String source;
-    private static final String[] separators = {";", ":", "@", "^", "*", "%"};
+    private static final String[] separators = {"!", ";", ":", "@", "^", "*", "%"};
     private static int errorCount = 0;
 
     public JerkSONParser(String source) {
@@ -13,19 +13,23 @@ public class JerkSONParser {
     }
 
     public String[] parseTokens() { // Pattern.CASE_INSENSITIVE
+
+    }
+
+    public String formatToken(String token) {
         return null;
     }
 
-    public String formatGroceryItem() {
+    public String formatGroceryItem(String item) {
         return null;
     }
 
-    public boolean checkValidForm() {
+    public boolean checkValidForm(String item) {
         return false;
     }
 
-    public void formatOutput() {
-        return;
+    public String formatOutput() {
+        return null;
     }
 
     public void displayOutput() {

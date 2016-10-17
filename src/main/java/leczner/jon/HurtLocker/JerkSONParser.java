@@ -13,7 +13,8 @@ public class JerkSONParser {
     }
 
     public String[] parseTokens() { // Pattern.CASE_INSENSITIVE
-
+        String[] tokens = source.split("##");
+        return tokens;
     }
 
     public String formatToken(String token) {
@@ -26,6 +27,10 @@ public class JerkSONParser {
 
     public boolean checkValidForm(String item) {
         return false;
+    }
+
+    public int getErrorCount() {
+        return errorCount;
     }
 
     public String formatOutput() {

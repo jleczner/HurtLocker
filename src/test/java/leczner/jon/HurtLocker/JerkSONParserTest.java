@@ -63,6 +63,12 @@ public class JerkSONParserTest {
     }
 
     @Test
+    public void getErrorCount() {
+//        jerkSONParser.prepData();
+        assertEquals(errorCount, jerkSONParser.getErrorCount());
+    }
+
+    @Test
     public void finalTest() {
         String expected = "name:    Milk \t\t seen: 6 times\n" +
                 "============= \t \t =============\n" +

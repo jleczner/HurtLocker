@@ -33,7 +33,7 @@ public abstract class JerkSONParser {
     }
 
     public boolean checkValidForm(String token) {
-        Pattern hasValue = Pattern.compile("[A-Za-z]+:\\w+");
+        Pattern hasValue = Pattern.compile("[A-Za-z]+:\\w+?");
         Matcher pattern = hasValue.matcher(token);
         return (pattern.find());
     }

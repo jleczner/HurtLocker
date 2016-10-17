@@ -37,7 +37,6 @@ public class GroceryParser extends JerkSONParser {
             names.put(name, 1);
         }
     }
-
     public void priceCheck(String price) {
         if (prices.containsKey(price)) {
             int counter = prices.get(price);
@@ -48,6 +47,7 @@ public class GroceryParser extends JerkSONParser {
     }
 
     public String formatGroceryItem(String name) {
+
         return null;
     }
 

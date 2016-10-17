@@ -24,18 +24,18 @@ public class JerkSONParserTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tokens = jerkSONParser.parseTokens();
+        tokens = jerkSONParser.parseItems();
     }
 
     @Test
-    public void parseTokensTest() {
+    public void parseItemsTest() {
         assertEquals(groceryCount, tokens.length);
     }
 
     @Test
-    public void formatTokenTest() {
+    public void formatItemTest() {
         String naMe = tokens[0];
-        String name = jerkSONParser.formatToken(naMe);
+        String name = jerkSONParser.formatItem(naMe);
         assertTrue("name".equals(name));
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by jonathanleczner on 10/17/16.
  */
-public interface JerkSONParseable {
+public interface JerkSONParsable {
     String getName();
     List<String> getPrices();
     int getNameOccurrences();

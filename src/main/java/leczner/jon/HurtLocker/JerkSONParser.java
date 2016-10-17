@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * Created by jonathanleczner on 10/17/16.
  */
-public class JerkSONParser {
+public abstract class JerkSONParser {
     private String source;
     private static final String separators = "[!;:@^*%]";
     private String[] tokens;
@@ -20,17 +20,13 @@ public class JerkSONParser {
         return tokens;
     }
 
-    public String formatItem(String item) {
+    public String parseTokens(String item) {
         Pattern separators = Pattern.compile(JerkSONParser.separators);
         String[] elements = separators.split(item);
         return null;
     }
 
-    public String formatGroceryItem(String item) {
-        return null;
-    }
-
-    public boolean checkValidForm(String item) {
+    public boolean checkValidForm(JerkSONParsable item) {
         return false;
     }
 
@@ -38,13 +34,9 @@ public class JerkSONParser {
         return errorCount;
     }
 
-    public String formatOutput() {
-        return null;
-    }
+    public abstract String formatOutput();
 
-    public void displayOutput() {
-        return;
-    }
+    public abstract void displayOutput();
 
     // https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Java
     public int levenshteinDistance(CharSequence lhs, CharSequence rhs) {

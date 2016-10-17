@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jonathanleczner on 10/17/16.
  */
-public class JerkSONParserTest {
-    private JerkSONParser jerkSONParser;
+public class GroceryParserTest {
+    private GroceryParser groceryList;
     private String[] tokens;
     private int errorCount = 4;
     private int groceryCount = 28;
@@ -20,23 +20,16 @@ public class JerkSONParserTest {
     @Before
     public void setup() {
         try {
-            jerkSONParser = new JerkSONParser(new Main().readRawDataToString());
+            groceryList = new GroceryParser(new Main().readRawDataToString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tokens = jerkSONParser.parseItems();
+        tokens = groceryList.parseItems();
     }
 
     @Test
     public void parseItemsTest() {
         assertEquals(groceryCount, tokens.length);
-    }
-
-    @Test
-    public void formatItemTest() {
-        String naMe = tokens[0];
-        String name = jerkSONParser.formatItem(naMe);
-        assertTrue("name".equals(name));
     }
 
     @Test
@@ -46,26 +39,28 @@ public class JerkSONParserTest {
                 "Price: \t 3.23\t\t seen: 5 times\n" +
                 "-------------\t\t -------------\n" +
                 "Price:   1.23\t\t seen: 1 time\n";
-        String actual = jerkSONParser.formatGroceryItem("milk");
+        String actual = groceryList.formatGroceryItem("milk");
         assertEquals(expected, actual);
     }
 
     @Test
     public void checkValidFormPassTest() {
         String proper = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
-        assertTrue(jerkSONParser.checkValidForm(proper));
+        Grocery milk = groceryList.newItem(proper);
+        assertTrue(groceryList.checkValidForm(milk));
     }
 
     @Test
     public void checkValidFormFailTest() {
-        String proper = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
-        assertFalse(jerkSONParser.checkValidForm(proper));
+        String improper = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
+        Grocery milk = groceryList.newItem(improper);
+        assertFalse(groceryList.checkValidForm(milk));
     }
 
     @Test
     public void getErrorCount() {
-//        jerkSONParser.prepData();
-        assertEquals(errorCount, jerkSONParser.getErrorCount());
+//        groceryList.prepData();
+        assertEquals(errorCount, groceryList.getErrorCount());
     }
 
     @Test
@@ -93,7 +88,7 @@ public class JerkSONParserTest {
                 "Price:   0.23  \t \t seen: 2 times\n" +
                 "\n" +
                 "Errors         \t \t seen: 4 times\n";
-        String actual = jerkSONParser.formatOutput();
+        String actual = groceryList.formatOutput();
         assertEquals(expected, actual);
     }
 }

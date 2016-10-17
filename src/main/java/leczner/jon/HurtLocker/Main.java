@@ -12,8 +12,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
         String source = (new Main()).readRawDataToString();
-        JerkSONParser jerkSONParser = new JerkSONParser(source);
-        jerkSONParser.formatOutput();
-        jerkSONParser.displayOutput();
+        JerkSONParser groceryList = new GroceryParser(source);
+        groceryList.formatOutput();
+        groceryList.displayOutput();
     }
 }

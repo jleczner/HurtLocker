@@ -6,10 +6,11 @@ import java.util.Map;
 /**
  * Created by jonathanleczner on 10/17/16.
  */
-public class Grocery implements JerkSONParseable {
+public class Grocery implements JerkSONParsable {
     private String name;
     private static int nameOccurrences = 0;
     private Map<String, Integer> prices; // key - price string, value - number of occurrences
+    private Map<String, List<String>> groceryInfo; // key - name, value - list of prices
 
     public Grocery(String name, String price) {
         this.name = name;
@@ -24,7 +25,7 @@ public class Grocery implements JerkSONParseable {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override

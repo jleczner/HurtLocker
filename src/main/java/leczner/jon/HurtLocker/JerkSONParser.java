@@ -20,16 +20,17 @@ public abstract class JerkSONParser {
     public abstract void displayOutput();
 
     public String[] parseItems() {
-        String[] items = source.split("##");
-        return items;
+        return source.split("##");
     }
 
-    public String[] parseTokens(String item) {
+    public String[] parseTokens(String item) throws InvalidFormException {
         Pattern separators = Pattern.compile(JerkSONParser.separators);
         String[] tokens = separators.split(item);
         for (String token : tokens) {
             if (!checkValidForm(token)) {
                 errorCount++;
+            } else {
+                throw new InvalidFormException("Broken token, object unusable");
             }
         }
         return tokens;

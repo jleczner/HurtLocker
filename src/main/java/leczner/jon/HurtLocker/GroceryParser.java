@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static javafx.scene.input.KeyCode.M;
-
 /**
  * Created by jonathanleczner on 10/17/16.
  */
@@ -99,7 +97,7 @@ public class GroceryParser extends JerkSONParser {
         if (nameMatch != null) {
             return nameMatch;
         } else {
-            return unFuzzyName(name);
+            return getUnfuzzyName(name);
         }
     }
 
@@ -116,22 +114,6 @@ public class GroceryParser extends JerkSONParser {
             fuzzyName = getUnfuzzyName(nameToCheck);
         }
         return fuzzyName;
-    }
-
-    private String getUnfuzzyName(String name) {
-        Pattern upperCaseLetters = Pattern.compile("\\G[A-Z]"); // switch for 0?
-        Matcher match = upperCaseLetters.matcher(name);
-        StringBuffer sb = new StringBuffer();
-        while (match.find()) {
-            String upper = match.group();
-            int ascii = (int) upper.charAt(0); // should just be one letter to flip
-            ascii += 32; // convert case
-            String lower = Character.toString((char)ascii);
-            match.appendReplacement(sb, lower);
-        }
-        match.appendTail(sb);
-
-        return name;
     }
 
     public Grocery newItem(String name, String price) {

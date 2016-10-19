@@ -34,14 +34,23 @@ public class JerkSONParserTest {
     public void parseTokensTest() {
         String input = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
         String[] expected = {"naMe:Milk", "price:3.23", "type:Food", "expiration:1/25/2016"};
-        String[] actual = groceryList.parseTokens(input);
+        String[] actual = new String[4];
+        try {
+            actual = groceryList.parseTokens(input);
+        } catch (InvalidFormException e) {
+            e.printStackTrace();
+        }
         assertArrayEquals(expected, actual);
     }
 
     @Test
     public void parseTokensErrorTest() {
         String input = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
-        groceryList.parseTokens(input);
+        try {
+            groceryList.parseTokens(input);
+        } catch (InvalidFormException e) {
+            e.printStackTrace();
+        }
         assertEquals(1, groceryList.getErrorCount());
     }
 

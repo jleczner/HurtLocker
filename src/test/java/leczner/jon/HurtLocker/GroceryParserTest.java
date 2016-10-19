@@ -53,12 +53,6 @@ public class GroceryParserTest {
     }
 
     @Test
-    public void processItemTest() {
-        groceryList.processItem("naMe:Milk;price:3.23;type:Food;expiration:1/25/2016");
-        // TODO
-    }
-
-    @Test
     public void processInputTest() {
         groceryList = new GroceryParser("naMe:Milk;price:3.23;type:Food;expiration:1/25/2016##naMe:;price:3.23;type:Food@expiration:1/25/2016##");
         groceryList.processInput();

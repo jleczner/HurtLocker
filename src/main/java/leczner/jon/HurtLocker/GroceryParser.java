@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static javafx.scene.input.KeyCode.M;
 
 /**
  * Created by jonathanleczner on 10/17/16.
@@ -84,12 +87,52 @@ public class GroceryParser extends JerkSONParser {
     }
 
     private void processKeyValue(String key, String value) {
-        if (levenshteinDistance(key, "name") <= MAX_LEVENSHTEIN) {
-            String name = value;
+        if (levenshteinDistance(key, GroceryField.NAME.name()) <= MAX_LEVENSHTEIN) {
+            String itemName = value;
             // TODO iterate over names? regex known data errors?
+        }
+        // check if it's a price token
+    }
+
+    private String processName(String name) {
+        String nameMatch = fuzzyNameSearch(name);
+        if (nameMatch != null) {
+            return nameMatch;
+        } else {
+            return unFuzzyName(name);
         }
     }
 
+    private String fuzzyNameSearch(String nameToCheck) {
+        String fuzzyName = null;
+        for (String nameInMap : names.keySet()) {
+            // check if the name is close to a name in the map
+            if (levenshteinDistance(nameInMap, nameToCheck) <= MAX_LEVENSHTEIN) {
+                fuzzyName = nameInMap;
+            }
+        }
+        // if not, generate a standardized version of the new name
+        if (fuzzyName == null) {
+            fuzzyName = getUnfuzzyName(nameToCheck);
+        }
+        return fuzzyName;
+    }
+
+    private String getUnfuzzyName(String name) {
+        Pattern upperCaseLetters = Pattern.compile("\\G[A-Z]"); // switch for 0?
+        Matcher match = upperCaseLetters.matcher(name);
+        StringBuffer sb = new StringBuffer();
+        while (match.find()) {
+            String upper = match.group();
+            int ascii = (int) upper.charAt(0); // should just be one letter to flip
+            ascii += 32; // convert case
+            String lower = Character.toString((char)ascii);
+            match.appendReplacement(sb, lower);
+        }
+        match.appendTail(sb);
+
+        return name;
+    }
 
     public Grocery newItem(String name, String price) {
         nameCheck(name);

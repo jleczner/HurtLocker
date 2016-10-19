@@ -51,6 +51,13 @@ public class JerkSONParserTest {
     }
 
     @Test
+    public void checkErrorCountTest() {
+        String[] tokens = {"naMe:", "price:3.23", "type:Food", "expiration:1/25/2016"};
+        groceryList.validateTokens(tokens);
+        assertEquals(1, groceryList.getErrorCount());
+    }
+
+    @Test
     public void checkValidFormPassTest() {
         String proper = "naMe:Milk;";
         assertTrue(groceryList.isValidForm(proper));

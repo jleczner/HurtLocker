@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Created by jonathanleczner on 10/17/16.
@@ -12,16 +11,7 @@ import java.util.regex.Pattern;
 public class GroceryParser extends JerkSONParser {
     private List<Grocery> groceryList;
     private Map<String, Integer> names;
-    private Map<String, Map<String, Integer>> groceryInfo; // key=name, value=[key=price, value=numOccurrences]
-
-    private final int MAX_LEVENSHTEIN = 3;
-
-    public enum GroceryField {
-        NAME,
-        PRICE,
-        TYPE,
-        EXPIRATION
-    }
+    private Map<String, Map<String, Integer>> groceryInfo; // key=name, value=[key=price, value=numOccurrences] TODO scrap?
 
     public GroceryParser(String source) {
         super(source);
@@ -44,8 +34,10 @@ public class GroceryParser extends JerkSONParser {
     public void processInput() {
         String[] items = super.parseItems();
         for (String item : items) {
-            processItem(item);
-        }
+            List<String> fields = processItem(item);
+            Grocery grocery = Grocery.groceryFactory(fields);
+            groceryList.add(grocery);
+        } // TODO populate maps
     }
 
     @Override
@@ -55,68 +47,23 @@ public class GroceryParser extends JerkSONParser {
 
     @Override
     public void displayOutput() {
-        return;
+        System.out.println(formatOutput());
     }
 
-    private void processItem(String item) {
+    private List<String> processItem(String item) {
         String[] tokens = parseTokens(item);
-        List<String> validTokens = validateTokens(tokens);
-        processTokens(validTokens);
-    }
-
-    private void processTokens(List<String> tokens) {
-        for (String token : tokens) {
-            processToken(token);
-        }
-    }
-
-    private void processToken(String token) {
-        Pattern colonPattern = Pattern.compile(":");
-        String[] keyAndValue = colonPattern.split(token);
-        String key = keyAndValue[0];
-        String value = keyAndValue[1];
-        processKeyValue(key, value);
-    }
-
-    private void processKeyValue(String key, String value) {
-        if (levenshteinDistance(key, GroceryField.NAME.name()) <= MAX_LEVENSHTEIN) {
-            String itemName = value;
-            // TODO iterate over names? regex known data errors?
-        }
-        // check if it's a price token
-    }
-
-    private String processName(String name) {
-        String nameMatch = fuzzyNameSearch(name);
-        if (nameMatch != null) {
-            return nameMatch;
-        } else {
-            return getUnfuzzyName(name);
-        }
-    }
-
-    private String fuzzyNameSearch(String nameToCheck) {
-        String fuzzyName = null;
-        for (String nameInMap : names.keySet()) {
-            // check if the name is close to a name in the map
-            if (levenshteinDistance(nameInMap, nameToCheck) <= MAX_LEVENSHTEIN) {
-                fuzzyName = nameInMap;
-            }
-        }
-        // if not, generate a standardized version of the new name
-        if (fuzzyName == null) {
-            fuzzyName = getUnfuzzyName(nameToCheck);
-        }
-        return fuzzyName;
+        return validateTokens(tokens);
     }
 
     public Grocery newItem(String name, String price) {
-        nameCheck(name);
-        priceCheck(name, price);
+        // later? TODO
+//        nameCheck(name);
+//        priceCheck(name, price);
 
-        Grocery item = new Grocery(name, price);
-        groceryList.add(item);
-        return item;
+//        Grocery item = new Grocery(name, price);
+//        groceryList.add(item);
+//        return item;
+        return null;
     }
 
     private void nameCheck(String name) {

@@ -56,8 +56,7 @@ public abstract class JerkSONParser {
         return (pattern.find());
     }
 
-
-    public String getUnfuzzyName(String name) {
+    public static String getUnfuzzyName(String name) {
         Pattern upperCaseLetters = Pattern.compile("([A-Z]|0)");
         Matcher match = upperCaseLetters.matcher(name);
         StringBuffer sb = new StringBuffer();
@@ -70,8 +69,8 @@ public abstract class JerkSONParser {
         return name;
     }
 
-    public String getUnfuzzyMatch(String match) {
-        String unfuzzyMatch = "";
+    private static String getUnfuzzyMatch(String match) {
+        String unfuzzyMatch;
         switch (match) {
             case "0":
                 unfuzzyMatch = Character.toString((char)111); // ascii for 'o'

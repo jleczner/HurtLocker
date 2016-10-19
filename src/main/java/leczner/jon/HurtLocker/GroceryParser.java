@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -60,17 +59,12 @@ public class GroceryParser extends JerkSONParser {
     }
 
     private void processItem(String item) {
-        String[] tokens;
-        try {
-            tokens = parseTokens(item);
-        } catch (InvalidFormException e) {
-            e.printStackTrace();
-            return;
-        }
-        processTokens(tokens);
+        String[] tokens = parseTokens(item);
+        List<String> validTokens = validateTokens(tokens);
+        processTokens(validTokens);
     }
 
-    private void processTokens(String[] tokens) {
+    private void processTokens(List<String> tokens) {
         for (String token : tokens) {
             processToken(token);
         }

@@ -34,35 +34,31 @@ public class JerkSONParserTest {
     public void parseTokensTest() {
         String input = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
         String[] expected = {"naMe:Milk", "price:3.23", "type:Food", "expiration:1/25/2016"};
-        String[] actual = new String[4];
-        try {
-            actual = groceryList.parseTokens(input);
-        } catch (InvalidFormException e) {
-            e.printStackTrace();
-        }
+        String[] actual = groceryList.parseTokens(input);
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void parseTokensErrorTest() {
-        String input = "naMe:;price:3.23;type:Food;expiration:1/25/2016";
-        try {
-            groceryList.parseTokens(input);
-        } catch (InvalidFormException e) {
-            e.printStackTrace();
-        }
-        assertEquals(1, groceryList.getErrorCount());
+    public void validateTokensTest() {
+        String[] tokens = {"naMe:Milk", "price:3.23", "type:Food", "expiration:1/25/2016"};
+        assertFalse(groceryList.validateTokens(tokens).isEmpty());
+    }
+
+    @Test
+    public void validateTokensErrorTest() {
+        String[] tokens = {"naMe:", "price:3.23", "type:Food", "expiration:1/25/2016"};
+        assertTrue(groceryList.validateTokens(tokens).isEmpty());
     }
 
     @Test
     public void checkValidFormPassTest() {
         String proper = "naMe:Milk;";
-        assertTrue(groceryList.checkValidForm(proper));
+        assertTrue(groceryList.isValidForm(proper));
     }
 
     @Test
     public void checkValidFormFailTest() {
         String improper = "naMe:;";
-        assertFalse(groceryList.checkValidForm(improper));
+        assertFalse(groceryList.isValidForm(improper));
     }
 }

@@ -1,5 +1,7 @@
 package leczner.jon.HurtLocker;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,28 +25,39 @@ public abstract class JerkSONParser {
         return source.split("##");
     }
 
-    public String[] parseTokens(String item) throws InvalidFormException {
+    public String[] parseTokens(String item) {
         Pattern separators = Pattern.compile(JerkSONParser.separators);
         return separators.split(item);
     }
 
-    // TODO new function validateTokens(String[])
-//            for (String token : tokens) {
-//        if (!checkValidForm(token)) {
-//            errorCount++;
-//            throw new InvalidFormException("Broken token, object unusable");
-//        } else {
-//        }
-//    }
+    public List<String> validateTokens(String[] tokens) {
+        List<String> validTokens = new ArrayList<>();
+        for (String token : tokens) {
+            try {
+                validateToken(token);
+            } catch (InvalidFormException e) {
+                errorCount++;
+                break;
+            }
+            validTokens.add(token);
+        }
+        return validTokens;
+    }
 
-    public boolean checkValidForm(String token) {
+    public void validateToken(String token) throws InvalidFormException {
+        if (!isValidForm(token)) {
+            throw new InvalidFormException("Broken token, object unusable");
+        }
+    }
+
+    public boolean isValidForm(String token) {
         Pattern hasValue = Pattern.compile("[A-Za-z]+:\\w+?");
         Matcher pattern = hasValue.matcher(token);
         return (pattern.find());
     }
 
 
-    protected String getUnfuzzyName(String name) {
+    public String getUnfuzzyName(String name) {
         Pattern upperCaseLetters = Pattern.compile("\\G[A-Z]"); // switch for 0?
         Matcher match = upperCaseLetters.matcher(name);
         StringBuffer sb = new StringBuffer();
@@ -56,7 +69,7 @@ public abstract class JerkSONParser {
             match.appendReplacement(sb, lower);
         }
         match.appendTail(sb);
-
+        name = sb.toString();
         return name;
     }
 

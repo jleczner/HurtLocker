@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Grocery implements JerkSONParsable {
     private String name;
-    private static List<String> prices = new ArrayList<>();
+    private List<String> prices = new ArrayList<>();
 
     public Grocery(String name, String price) {
         this.name = name;

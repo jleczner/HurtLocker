@@ -58,19 +58,31 @@ public abstract class JerkSONParser {
 
 
     public String getUnfuzzyName(String name) {
-        Pattern upperCaseLetters = Pattern.compile("\\G[A-Z]"); // switch for 0?
+        Pattern upperCaseLetters = Pattern.compile("([A-Z]|0)");
         Matcher match = upperCaseLetters.matcher(name);
         StringBuffer sb = new StringBuffer();
         while (match.find()) {
-            String upper = match.group();
-            int ascii = (int) upper.charAt(0); // should just be one letter to flip
-            ascii += 32; // convert case
-            String lower = Character.toString((char)ascii);
-            match.appendReplacement(sb, lower);
+            String unfuzzyMatch = getUnfuzzyMatch(match.group());
+
+            match.appendReplacement(sb, unfuzzyMatch);
         }
         match.appendTail(sb);
         name = sb.toString();
         return name;
+    }
+
+    public String getUnfuzzyMatch(String match) {
+        String unfuzzyMatch = "";
+        switch (match) {
+            case "0":
+                unfuzzyMatch = Character.toString((char)111); // ascii for 'o'
+                break;
+            default:
+                int ascii = (int) match.charAt(0); // should just be one letter to flip
+                ascii += 32; // convert case
+                unfuzzyMatch = Character.toString((char)ascii);
+        }
+        return unfuzzyMatch;
     }
 
     public int getErrorCount() {

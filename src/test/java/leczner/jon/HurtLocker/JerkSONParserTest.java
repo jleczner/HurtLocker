@@ -68,4 +68,14 @@ public class JerkSONParserTest {
         String improper = "naMe:;";
         assertFalse(groceryList.isValidForm(improper));
     }
+
+    @Test
+    public void fuzzyTester() {
+        assertEquals("name", groceryList.getUnfuzzyName("naMe"));
+    }
+
+    @Test
+    public void fuzzyTesterZero() {
+        assertEquals("cookies", groceryList.getUnfuzzyName("c00kieS"));
+    }
 }

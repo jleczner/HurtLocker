@@ -63,7 +63,6 @@ public abstract class JerkSONParser {
         StringBuffer sb = new StringBuffer();
         while (match.find()) {
             String unfuzzyMatch = getUnfuzzyMatch(match.group());
-
             match.appendReplacement(sb, unfuzzyMatch);
         }
         match.appendTail(sb);
@@ -83,6 +82,15 @@ public abstract class JerkSONParser {
                 unfuzzyMatch = Character.toString((char)ascii);
         }
         return unfuzzyMatch;
+    }
+
+    public static String capitalizeFirstLetter(String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        char upper = Character.toUpperCase((char)name.charAt(0));
+        String upperString = Character.toString(upper);
+        sb.replace(0, 1, upperString);
+        return sb.toString();
     }
 
     public int getErrorCount() {

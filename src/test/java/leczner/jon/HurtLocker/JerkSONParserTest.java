@@ -71,11 +71,16 @@ public class JerkSONParserTest {
 
     @Test
     public void fuzzyTester() {
-        assertEquals("name", groceryList.getUnfuzzyName("naMe"));
+        assertTrue("name".equals(groceryList.getUnfuzzyName("naMe")));
     }
 
     @Test
     public void fuzzyTesterZero() {
-        assertEquals("cookies", groceryList.getUnfuzzyName("c00kieS"));
+        assertTrue("cookies".equals(groceryList.getUnfuzzyName("c00kieS")));
+    }
+
+    @Test
+    public void capitalizeTest() {
+        assertTrue("Word".equals(JerkSONParser.capitalizeFirstLetter("word")));
     }
 }

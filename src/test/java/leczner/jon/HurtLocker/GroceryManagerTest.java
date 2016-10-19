@@ -14,13 +14,12 @@ import static org.junit.Assert.assertEquals;
 public class GroceryManagerTest {
     private GroceryManager groceryManager;
     private List<Grocery> groceryList;
-    private List<String> milkFields;
 
     @Before
     public void setup() {
         groceryList = new ArrayList<>();
 
-        milkFields = new ArrayList<>();
+        List<String> milkFields = new ArrayList<>();
         milkFields.add("naMe:Milk");
         milkFields.add("pRice:3.23");
         milkFields.add("type:Food");
@@ -35,6 +34,13 @@ public class GroceryManagerTest {
         milkFields.add("expiration:1/25/2016");
         groceryList.add(Grocery.groceryFactory(milkFields));
 
+        List<String> breadFields = new ArrayList<>();
+        breadFields.add("naMe:BREAD");
+        breadFields.add("pRice:3.20");
+        breadFields.add("type:Food");
+        breadFields.add("expiration:1/25/2016");
+        groceryList.add(Grocery.groceryFactory(breadFields));
+
         groceryManager = new GroceryManager(groceryList);
     }
 
@@ -46,5 +52,13 @@ public class GroceryManagerTest {
     @Test
     public void getPriceOccurrencesTest() {
         assertEquals(2, groceryManager.getPriceOccurrences("milk", "3.23"));
+    }
+
+    @Test
+    public void getUniqueNamesTest() {
+        List<String> expected = new ArrayList<>();
+        expected.add("milk");
+        expected.add("bread");
+        assertEquals(expected, groceryManager.getUniqueNames());
     }
 }

@@ -1,5 +1,6 @@
 package leczner.jon.HurtLocker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,5 +31,15 @@ public class GroceryManager {
             }
         }
         return occurrences;
+    }
+
+    public List<String> getUniqueNames() {
+        List<String> names = new ArrayList<>();
+        for (Grocery g : groceryList) {
+            if (!names.contains(g.getKey())) {
+                names.add(g.getKey());
+            }
+        }
+        return names;
     }
 }

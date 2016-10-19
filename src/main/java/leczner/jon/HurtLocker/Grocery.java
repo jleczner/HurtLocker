@@ -34,7 +34,7 @@ public class Grocery implements JerkSONParsable {
 
     public static Grocery groceryFactory(List<String> fields) {
         fields = processFields(fields);
-        String name = fields.get(0);
+        String name = fields.get(0); // TODO maybe handle exception
         String price = fields.get(1);
         String type = fields.get(2);
         String expiration = fields.get(3);

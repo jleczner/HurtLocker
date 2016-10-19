@@ -33,8 +33,9 @@ public class GroceryParser extends JerkSONParser {
     @Override
     public String formatOutput() {
         String outputString = "";
-        for (Grocery item : groceryList) {
-            outputString += formatGroceryItem(item);
+        List<String> uniqueGroceries = groceryManager.getUniqueNames();
+        for (String grocery : uniqueGroceries) {
+            outputString += formatGroceryItem(grocery);
         }
         return outputString;
     }
@@ -49,7 +50,7 @@ public class GroceryParser extends JerkSONParser {
         return validateTokens(tokens);
     }
 
-    public String formatGroceryItem(Grocery item) {
+    public String formatGroceryItem(String name) {
         String outputString = ""; // TODO
         return outputString;
     }

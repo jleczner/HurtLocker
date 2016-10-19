@@ -40,8 +40,8 @@ public class GroceryParserTest {
         String expected = "name:    Milk \t\t seen: 1 time\n" +
                 "============= \t \t =============\n" +
                 "Price: \t 3.23\t\t seen: 1 times\n";
-//        String actual = groceryList.formatGroceryItem(Grocery.groceryFactory()); // TODO FIXME
-//        assertEquals(expected, actual);
+        String actual = groceryList.formatGroceryItem("milk");
+        assertEquals(expected, actual);
     }
 
     @Test

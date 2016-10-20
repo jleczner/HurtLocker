@@ -34,10 +34,18 @@ public class Grocery implements JerkSONParsable {
 
     public static Grocery groceryFactory(List<String> fields) {
         fields = processFields(fields);
-        String name = fields.get(0); // TODO maybe handle exception
-        String price = fields.get(1);
-        String type = fields.get(2);
-        String expiration = fields.get(3);
+        String name;
+        String price;
+        String type;
+        String expiration;
+        try {
+            name = fields.get(0);
+            price = fields.get(1);
+            type = fields.get(2);
+            expiration = fields.get(3);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
         return new Grocery(name, price, type, expiration);
     }
 

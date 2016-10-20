@@ -25,7 +25,9 @@ public class GroceryParser extends JerkSONParser {
         for (String item : items) {
             List<String> fields = processItem(item);
             Grocery grocery = Grocery.groceryFactory(fields);
-            groceryList.add(grocery);
+            if (grocery != null) {
+                groceryList.add(grocery);
+            }
         }
         groceryManager = new GroceryManager(groceryList);
     }
@@ -37,6 +39,7 @@ public class GroceryParser extends JerkSONParser {
         for (String grocery : uniqueGroceries) {
             outputString += formatGroceryItem(grocery);
         }
+        outputString += errorCountString();
         return outputString;
     }
 
@@ -53,24 +56,50 @@ public class GroceryParser extends JerkSONParser {
     public String formatGroceryItem(String name) { // width of output blocks is 13 TODO refactor to set width based on longest unique name
         String outputString;
         StringBuilder stringBuilder = new StringBuilder();
+        int timesSeen = groceryManager.getNameOccurrences(name);
+        List<String> priceList = groceryManager.getUniquePrices(name);
 
         stringBuilder.append("name:");
-        while (stringBuilder.length() + name.length() <= 13) { stringBuilder.append(" "); }
+        while (stringBuilder.length() + name.length() < 13) { stringBuilder.append(" "); }
         stringBuilder.append(capitalizeFirstLetter(name));
-        stringBuilder.append("\\t\\t");
-
+        stringBuilder.append("\t\t");
         stringBuilder.append("seen: ");
-        int timesSeen = groceryManager.getNameOccurrences(name);
         stringBuilder.append(timesSeen);
         stringBuilder.append(" time");
         if (timesSeen > 1) { stringBuilder.append("s"); }
 
-        stringBuilder.append("=============" + "\\t\\t" + "=============");
+        stringBuilder.append("\n" + "=============" + "\t\t" + "=============" + "\n");
 
-        stringBuilder.append("Price:");
-
+        int i = 1;
+        for (String price : priceList) {
+            stringBuilder.append("Price:   ");
+            stringBuilder.append(price);
+            stringBuilder.append("\t\t");
+            stringBuilder.append("seen: ");
+            int timesPriceSeen = groceryManager.getPriceOccurrences(name, price);
+            stringBuilder.append(timesPriceSeen);
+            stringBuilder.append(" time");
+            if (timesPriceSeen > 1) { stringBuilder.append("s"); }
+            if (i++ != priceList.size() || priceList.size() == 1) {
+                stringBuilder.append("\n" + "-------------" + "\t\t" + "-------------" + "\n");
+            } else {
+                stringBuilder.append("\n");
+            }
+        }
+        stringBuilder.append("\n");
 
         outputString = stringBuilder.toString();
         return outputString;
+    }
+
+    public String errorCountString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Errors\t\t\t\t");
+        stringBuilder.append("seen: ");
+        stringBuilder.append(getErrorCount());
+        stringBuilder.append(" time");
+        if (getErrorCount() > 1) { stringBuilder.append("s"); }
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 }

@@ -61,4 +61,12 @@ public class GroceryManagerTest {
         expected.add("bread");
         assertEquals(expected, groceryManager.getUniqueNames());
     }
+
+    @Test
+    public void getUniquePricesTest() {
+        List<String> expected = new ArrayList<>();
+        expected.add("3.23");
+        expected.add("3.20");
+        assertEquals(expected, groceryManager.getUniquePrices("milk"));
+    }
 }

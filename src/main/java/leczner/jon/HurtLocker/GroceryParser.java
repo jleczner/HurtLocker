@@ -50,8 +50,27 @@ public class GroceryParser extends JerkSONParser {
         return validateTokens(tokens);
     }
 
-    public String formatGroceryItem(String name) {
-        String outputString = ""; // TODO
+    public String formatGroceryItem(String name) { // width of output blocks is 13 TODO refactor to set width based on longest unique name
+        String outputString;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("name:");
+        while (stringBuilder.length() + name.length() <= 13) { stringBuilder.append(" "); }
+        stringBuilder.append(capitalizeFirstLetter(name));
+        stringBuilder.append("\\t\\t");
+
+        stringBuilder.append("seen: ");
+        int timesSeen = groceryManager.getNameOccurrences(name);
+        stringBuilder.append(timesSeen);
+        stringBuilder.append(" time");
+        if (timesSeen > 1) { stringBuilder.append("s"); }
+
+        stringBuilder.append("=============" + "\\t\\t" + "=============");
+
+        stringBuilder.append("Price:");
+
+
+        outputString = stringBuilder.toString();
         return outputString;
     }
 }

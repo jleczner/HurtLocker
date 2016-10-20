@@ -42,4 +42,14 @@ public class GroceryManager {
         }
         return names;
     }
+
+    public List<String> getUniquePrices(String name) {
+        List<String> prices = new ArrayList<>();
+        for (Grocery g : groceryList) {
+            if (!prices.contains(g.getValue()) && g.getKey().equals(name)) {
+                prices.add(g.getValue());
+            }
+        }
+        return prices;
+    }
 }
